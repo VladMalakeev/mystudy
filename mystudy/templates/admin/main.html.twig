@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block control_panel %}
+    <div id="block_control_panel">
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <p>Hello {{ app.user.username }}</p>
+        {% endif %}
+    </div>
+{% endblock %}

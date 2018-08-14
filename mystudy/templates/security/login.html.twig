@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login Page</title>
+    {% block stylesheets %}
+      <link href="assets/css/login.css" type="text/css" rel="stylesheet">
+    {% endblock %}
+</head>
+<body>
+<form id="form" action="" method="post">
+
+    {% if error %}
+      <div id="error">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+  <label>Username</label>
+  <input type="text" name="_username" value="{{ lastUserName }}" ><br>
+  <label>Password</label>
+  <input type="password" name="_password"><br>
+  <input id="login" type="submit" value="Login">
+</form>
+</body>
+</html>

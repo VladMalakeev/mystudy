@@ -1,0 +1,35 @@
+{% extends 'management/management.html.twig' %}
+   {% block stylesheets %}
+       {{ parent() }}
+       <link href="../assets/css/structure.css"  rel="stylesheet">
+   {% endblock %}
+
+{% block title %}Структура института{% endblock %}
+     {% block workspase %}
+         <div id="block_workspace">
+             <ul id="departments">
+                 {% for department in departments %}
+                     <li>
+                         <a href="/management/structure/department/{{ department.name }}">{{ department.name }}</a>
+                         <ul id="courses">
+                             {% for course  in department.courses %}
+                                 <li>
+                                     <h4>{{ course.number }}курс</h4>
+                                     {% for group  in course.groups %}
+                                         <a href="/management/structure/department/{{ department.name }}/{{ course.number }}/{{ group  }}">
+                                             {{ group }}</a>
+                                     {% endfor %}
+                                 </li>
+                             {% endfor %}
+                         </ul>
+                     </li>
+                 {% endfor %}
+                 <li>
+                     <a href="{{ path('add_department') }}">Добавить кафедру</a>
+                 </li>
+             </ul>
+
+
+
+         </div>
+     {% endblock %}

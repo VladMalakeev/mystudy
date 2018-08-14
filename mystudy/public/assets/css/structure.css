@@ -1,0 +1,9 @@
+#departments li{
+    display: inline-block;
+    margin:10px;
+}
+
+#courses li{
+    display: inline-block;
+    margin:10px;
+}
