@@ -1,0 +1,15 @@
+#subjects_list{
+    border: 1px solid;
+    width: 75%;
+    height: 100%;
+}
+
+#departments{
+    border: 1px solid;
+    width: 24%;
+    height: 100%;
+    float: right;
+}
+form{
+    display: inline-block;
+}
