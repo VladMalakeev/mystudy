@@ -2,16 +2,31 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\DepartmentRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class StructureController extends AbstractController
+/**
+ * @Route("/management/structure")
+ */
+class StructureController extends Controller
 {
     /**
-     * @Route("/management/structure", name="structure")
+     * @Route("/", name="structure")
      */
-    public function index()
+    public function index(DepartmentRepository $departmentRepository)
     {
+        $departments = $departmentRepository->findAll();
+
+        if(count($departments)>0){
+            return $this->redirectToRoute('department_show', array("short_name" => $departments[0]->getShortName()));
+        }
+        else{
+            return $this->redirectToRoute('empty_department');
+        }
+
+        /*
         $schedule = "schedule";
         $group = array("name" => "AI162", "schedule" => $schedule);
         $groups = array("AI181", "AI182", "AI182");
@@ -24,20 +39,9 @@ class StructureController extends AbstractController
         $deppartment_1 = array("name" => "AI", "courses" => $courses);
         $deppartment_2 = array("name" => "AT", "courses" => $courses);
         $departments = array($deppartment_1, $deppartment_2);
-        return $this->render('structure/structure.html.twig.', array("departments" => $departments));
+        */
+
+       // return $this->render('structure/structure.html.twig.', array("departments" => $departments));
     }
 
-    /**
-     * @Route("/management/structure/department/{name}", name="view_department")
-     */
-    public function viewDepartments($name){
-
-    }
-
-    /**
-     * @Route("/management/structure/add_department", name="add_department")
-     */
-    public function addDepartment(){
-
-    }
 }

@@ -5,15 +5,16 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("management/subjects", name="subjects")
+ */
 class SubjectsController extends AbstractController
 {
     /**
-     * @Route("/subjects", name="subjects")
+     * @Route("/", name="subjects")
      */
     public function index()
     {
-        return $this->render('subjects/index.html.twig.twig', [
-            'controller_name' => 'SubjectsController',
-        ]);
+        return $this->render('subjects/subjects.html.twig');
     }
 }

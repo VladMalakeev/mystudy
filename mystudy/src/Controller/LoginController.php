@@ -18,18 +18,8 @@ class LoginController extends AbstractController
      */
     public function loginAction(Request $request, AuthenticationUtils $authUtils)
     {
-        //$user = new Users();
-
         $error = $authUtils->getLastAuthenticationError();
         $lastUsername = $authUtils->getLastUsername();
-
-       /* $form = $this->createFormBuilder($user)
-            ->add('_username')
-            ->add('_password')
-            ->add('save', SubmitType::class)
-            ->getForm();*/
-
-
 
         return $this->render('security/login.html.twig', array(
             'error' => $error,

@@ -1,7 +1,7 @@
 {% extends 'management/management.html.twig' %}
    {% block stylesheets %}
        {{ parent() }}
-       <link href="../assets/css/structure.css"  rel="stylesheet">
+       <link href="{{ asset('css/structure.css') }}"  rel="stylesheet">
    {% endblock %}
 
 {% block title %}Структура института{% endblock %}
@@ -28,8 +28,5 @@
                      <a href="{{ path('add_department') }}">Добавить кафедру</a>
                  </li>
              </ul>
-
-
-
          </div>
      {% endblock %}
