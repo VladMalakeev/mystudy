@@ -13,6 +13,13 @@
                 {% for department in data_base.getDepartments %}
                     <li>
                         <a href="{{ path('subject_show', {'currentDepartment':department.getShortName}) }}">{{ department.getShortName }}</a>
+                        <ul id="courses">
+                            {% for course in data_base.getCourses %}
+                                <li>
+                                    <a href="{{ path('subject_show_course', {'currentDepartment':department.getShortName, 'number': course.getNumber}) }}">{{ course.getNumber }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
                     </li>
                 {% endfor %}
             </ul>
@@ -21,9 +28,13 @@
        <div id="subjects_list">
            <ul>
                <li>
+                   {% if current_course == null %}
                    <a href="{{ path('new_subjects', {'currentDepartment' : department_name}) }}">Добавить предмет</a>
+                   {% else %}
+                   <a href="{{ path('new_subjects_course', {'currentDepartment' : department_name, 'number' : current_course }) }}">Добавить предмет</a>
+                   {% endif %}
                </li>
-            {% for subject in data_base.getSubjects(department_name) %}
+            {% for subject in data_base.getSubjects(department_name, current_course) %}
                 <li>
                     {{ subject.getName }}{{ include('subjects/_delete_form.html.twig') }}
 

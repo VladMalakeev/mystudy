@@ -1,6 +1,7 @@
 <?php
 namespace App\Service;
 
+use App\Entity\Courses;
 use App\Entity\Department;
 use App\Entity\Institute;
 use App\Repository\DepartmentRepository;
@@ -51,13 +52,36 @@ class DBHelper extends AbstractController
         return $courses;
     }
 
-    public function getSubjects(string $short_name){
+    public function getSubjects($short_name, $current_course){
         $department = $this->getDoctrine()->getRepository(Department::class)->findOneBy(array("short_name" => $short_name));
-        return $department->getSubjects();
+        $byDepartment = $department->getSubjects();
+
+        if(!$current_course==null) {
+            $course = $this->getDoctrine()->getRepository(Courses::class)->findOneBy(array("number" => $current_course));
+            $byCourse = $course->getSubjects();
+
+            $subjects = array();
+            foreach($byDepartment as $instanceDep){
+                foreach ($byCourse as $instanceCourse){
+                    if($instanceDep->getId() == $instanceCourse->getId()){
+                        $subjects[] = $instanceDep;
+                        break;
+                    }
+                }
+            }
+            return $subjects;
+        }
+
+        return $byDepartment;
+
     }
 
-    public function getRecturers( string $short_name){
+    public function getLecturers( string $short_name){
         $department = $this->getDoctrine()->getRepository(Department::class)->findOneBy(array("short_name" => $short_name));
-        return $department->getRecturers();
+        return $department->getLecturers();
+    }
+
+    public function getCourses(){
+        return $this->getDoctrine()->getRepository(Courses::class)->findAll();
     }
 }

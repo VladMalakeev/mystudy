@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controller;
+use App\Entity\Courses;
 use App\Entity\Department;
 use App\Entity\Subjects;
 use App\Form\SubjectsType;
@@ -30,12 +31,21 @@ class SubjectsController extends Controller
     }
 
     /**
+     * @Route("/{currentDepartment}/course/{number}", name="subject_show_course")
+     */
+    public function showCourse($currentDepartment, $number)
+    {
+        return $this->render('subjects/subjects.html.twig', ['department_name' => $currentDepartment, 'current_course' => $number]);
+    }
+
+    /**
      * @Route("/{currentDepartment}", name="subject_show")
      */
     public function show($currentDepartment)
     {
-        return $this->render('subjects/subjects.html.twig', ['department_name' => $currentDepartment]);
+        return $this->render('subjects/subjects.html.twig', ['department_name' => $currentDepartment, 'current_course' => null]);
     }
+
 
     /**
      * @Route("/{currentDepartment}/new", name="new_subjects",  methods="GET|POST")
@@ -58,6 +68,31 @@ class SubjectsController extends Controller
 
         return $this->render('subjects/new.html.twig', ['form' => $form->createView()]);
     }
+
+    /**
+     * @Route("/{currentDepartment}/course/{number}/new", name="new_subjects_course",  methods="GET|POST")
+     */
+    public function newSubjectCourse( $currentDepartment, $number, Request $request):Response
+    {
+        $department = $this->getDoctrine()->getRepository(Department::class)->findOneBy(array("short_name" => $currentDepartment));
+        $course = $this->getDoctrine()->getRepository(Courses::class)->findOneBy(array("number" => $number));
+        $subject = new Subjects();
+        $subject->setDepartment($department);
+        $subject->setCourses($course);
+        $form = $this->createForm(SubjectsType::class, $subject);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($subject);
+            $em->flush();
+
+            return $this->redirectToRoute('subject_show_course', ['currentDepartment' => $currentDepartment, 'number' => $number]);
+        }
+
+        return $this->render('subjects/new.html.twig', ['form' => $form->createView()]);
+    }
+
 
     /**
      * @Route("/{id}/edit", name="subjects_edit", methods="GET|POST")

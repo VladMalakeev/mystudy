@@ -12,7 +12,7 @@ class StaffController extends AbstractController
      */
     public function index()
     {
-        return $this->render('staff/index.html.twig.twig', [
+        return $this->render('staff/index.html.twig', [
             'controller_name' => 'StaffController',
         ]);
     }

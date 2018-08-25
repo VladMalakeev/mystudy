@@ -13,3 +13,7 @@
 form{
     display: inline-block;
 }
+
+#courses li{
+    display: inline-block;
+}
