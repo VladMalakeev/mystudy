@@ -1,0 +1,26 @@
+{% extends 'subjects/subjects.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('css/form_subject.css') }}"  rel="stylesheet">
+{% endblock %}
+
+{% block absolute %}
+<div id="cover">
+    <div id="newData">
+        {{ form_start(form) }}
+        <h2>{{ form_label(form.name) }}</h2>
+          <div> {{ form_widget(form.name) }}</div>
+
+        <h2>{{ form_label(form.description) }}</h2>
+        <div>{{ form_widget(form.description) }}</div>
+
+
+        <div id="buttons">
+            <button class="submit">{{ button_label|default('Сохранить') }}</button>
+            <a class="submit" href="{{ path(route, {'currentDepartment' : department_name, 'number' : current_course }) }}">Отмена</a>
+        </div>
+        {{ form_end(form) }}
+    </div>
+</div>
+{% endblock %}

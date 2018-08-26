@@ -9,49 +9,57 @@
     </head>
     <body>
         {% block body %}
-            {% block header %}
-                <div id="block_header">
-                    <a id="element_exit" href="/logout"><img src="{{ asset('img/exit.png') }}" width="35" height="35"></a>
-                    {% if is_granted('ROLE_SUPER_ADMIN') %}
-                    <a href="/institutes">Управление институтами</a>
-                    {% endif %}
-                    <h1 id="institute_name">{{ data_base.getInstitute }}</h1>
-                </div>
+
+            {% block absolute %}
+
             {% endblock %}
-
-            {% block nav_bar %}
-                <div id="block_nav_bar">
-                    <ul>
-                        <li>
-                            <a href="/management">Управление</a>
-                        </li>
-
-                        <li>
-                            <a href="/news">Новости</a>
-                        </li>
-
-                        {% if is_granted('ROLE_ADMIN') %}
-                            <li>
-                                <a href="/staff">Персонал</a>
-                            </li>
+            <div id="wraper">
+                {% block header %}
+                    <div id="block_header">
+                        <a id="element_exit" href="/logout"><img src="{{ asset('img/exit.png') }}" width="35" height="35"></a>
+                        {% if is_granted('ROLE_SUPER_ADMIN') %}
+                        <a href="/institutes">Управление институтами</a>
                         {% endif %}
+                        <h1 id="institute_name">{{ data_base.getInstitute }}</h1>
+                    </div>
+                {% endblock %}
 
-                    </ul>
+                {% block nav_bar %}
+                    <div id="block_nav_bar">
+                        <ul>
+                            <li>
+                                <a href="/management">Управление</a>
+                            </li>
+
+                            <li>
+                                <a href="/news">Новости</a>
+                            </li>
+
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <li>
+                                    <a href="/staff">Персонал</a>
+                                </li>
+                            {% endif %}
+
+                        </ul>
+                    </div>
+                {% endblock %}
+
+                {% block control_panel %}
+                <div id="block_control_panel">
+
                 </div>
-            {% endblock %}
+                {% endblock %}
 
-            {% block control_panel %}
-            <div id="block_control_panel">
-
+                {% block footer %}
+                    <div id="block_footer">
+                        <h2>MY-STUDY.TK COPYRIGHT 2018</h2>
+                    </div>
+                {% endblock %}
             </div>
-            {% endblock %}
-
-            {% block footer %}
-                <div id="block_footer">
-                    <h2>MY-STUDY.TK COPYRIGHT 2018</h2>
-                </div>
-            {% endblock %}
         {% endblock %}
-        {% block javascripts %}{% endblock %}
+        {% block javascripts %}
+        <script src="{{ asset('js/scripts.js') }}"></script>
+        {% endblock %}
     </body>
 </html>

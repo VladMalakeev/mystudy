@@ -18,8 +18,8 @@ class SubjectsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('description')
+            ->add('name', null, array('label' => 'Полное название дисциплины'))
+            ->add('description', null, array('label' => 'Краткое описание дисциплины'))
         ;
     }
 

@@ -66,7 +66,11 @@ class SubjectsController extends Controller
             return $this->redirectToRoute('subject_show', ['currentDepartment' => $currentDepartment]);
         }
 
-        return $this->render('subjects/new.html.twig', ['form' => $form->createView()]);
+        return $this->render('subjects/form.html.twig',
+            ['form' => $form->createView(),
+            'route' => 'subject_show',
+            'department_name' => $currentDepartment,
+            'current_course' => null]);
     }
 
     /**
@@ -90,28 +94,34 @@ class SubjectsController extends Controller
             return $this->redirectToRoute('subject_show_course', ['currentDepartment' => $currentDepartment, 'number' => $number]);
         }
 
-        return $this->render('subjects/new.html.twig', ['form' => $form->createView()]);
+        return $this->render('subjects/form.html.twig',
+            ['form' => $form->createView(),
+                'route' => 'subject_show_course',
+                'department_name' => $currentDepartment,
+                'current_course' => $number]);
     }
 
 
     /**
-     * @Route("/{id}/edit", name="subjects_edit", methods="GET|POST")
+     * @Route("/{currentDepartment}/{id}/edit", name="subjects_edit", methods="GET|POST")
      */
-    public function edit(Request $request, Subjects $subject): Response
+    public function edit($currentDepartment, $id, Request $request): Response
     {
-        $form = $this->createForm(Subjects1Type::class, $subject);
+        $subject = $this->getDoctrine()->getRepository(Subjects::class)->find($id);
+        $form = $this->createForm(SubjectsType::class, $subject);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('subjects_edit', ['id' => $subject->getId()]);
+            return $this->redirectToRoute('subject_show', ['currentDepartment' => $currentDepartment]);
         }
 
-        return $this->render('subjects/edit.html.twig', [
-            'subject' => $subject,
-            'form' => $form->createView(),
-        ]);
+        return $this->render('subjects/form.html.twig',
+            ['form' => $form->createView(),
+                'route' => 'subject_show',
+                'department_name' => $currentDepartment,
+                'current_course' => null]);
     }
 
     /**

@@ -52,12 +52,15 @@ class LecturersController extends Controller
             $em->persist($lecturer);
             $em->flush();
 
+            $this->addFlash('notice', 'Преподаватель добавлен!');
             return $this->redirectToRoute('lecturers_show', array('currentDepartment' => $currentDepartment));
         }
 
-        return $this->render('lecturers/new.html.twig', [
+        return $this->render('lecturers/form.html.twig', [
             'lecturer' => $lecturer,
+            'photo' => null,
             'form' => $form->createView(),
+            'department_name' => $currentDepartment
         ]);
     }
 
@@ -70,22 +73,31 @@ class LecturersController extends Controller
     }
 
     /**
-     * @Route("/{id}/edit", name="lecturers_edit", methods="GET|POST")
+     * @Route("/{currentDepartment}/{id}/edit", name="lecturers_edit", methods="GET|POST")
      */
-    public function edit(Request $request, Lecturers $lecturer): Response
+    public function edit($currentDepartment, $id, Request $request, FileUploader $fileUploader): Response
     {
+        $lecturer = $this->getDoctrine()->getRepository(Lecturers::class)->find($id);
+        $photo = $lecturer->getPhoto();
+        $lecturer->setPhoto(null);
         $form = $this->createForm(LecturersType::class, $lecturer);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('lecturers_edit', ['id' => $lecturer->getId()]);
+            $file = $form['photo']->getData();
+            $fileName = $fileUploader->upload($file);
+            $lecturer->setPhoto($fileName);
+
+            $this->getDoctrine()->getManager()->flush();
+            $this->addFlash('notice', 'Данные отредактированы!');
+            return $this->redirectToRoute('lecturers_show', ['currentDepartment' => $currentDepartment]);
         }
 
-        return $this->render('lecturers/edit.html.twig', [
-            'lecturer' => $lecturer,
-            'form' => $form->createView(),
+        return $this->render('lecturers/form.html.twig', [
+            'department_name' => $currentDepartment,
+            'photo' => $photo,
+            'form' => $form->createView()
         ]);
     }
 

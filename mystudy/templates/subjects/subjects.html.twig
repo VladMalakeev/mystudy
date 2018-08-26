@@ -1,7 +1,7 @@
 {% extends 'management/management.html.twig' %}
  {% block stylesheets %}
      {{ parent() }}
-     <link href="{{ asset('css/subjects.css') }}"  rel="stylesheet">
+     <link href="{{ asset('css/list.css') }}"  rel="stylesheet">
  {% endblock %}
 
 {% block title %}Список предметов{% endblock %}
@@ -37,7 +37,7 @@
             {% for subject in data_base.getSubjects(department_name, current_course) %}
                 <li>
                     {{ subject.getName }}{{ include('subjects/_delete_form.html.twig') }}
-
+                    <a href="{{ path('subjects_edit', {'currentDepartment': department_name, 'id' : subject.getId}) }}">Редактировать</a>
                 </li>
            {% endfor %}
            </ul>
