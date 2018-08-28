@@ -35,15 +35,15 @@ class SubjectsController extends Controller
      */
     public function showCourse($currentDepartment, $number)
     {
-        return $this->render('subjects/subjects.html.twig', ['department_name' => $currentDepartment, 'current_course' => $number]);
+        return $this->render('subjects/subject_list.html.twig', ['department_name' => $currentDepartment, 'current_course' => $number]);
     }
 
     /**
      * @Route("/{currentDepartment}", name="subject_show")
      */
-    public function show($currentDepartment)
+    public function showSubjects($currentDepartment)
     {
-        return $this->render('subjects/subjects.html.twig', ['department_name' => $currentDepartment, 'current_course' => null]);
+        return $this->render('subjects/subject_list.html.twig', ['department_name' => $currentDepartment, 'current_course' => null]);
     }
 
 
@@ -66,7 +66,7 @@ class SubjectsController extends Controller
             return $this->redirectToRoute('subject_show', ['currentDepartment' => $currentDepartment]);
         }
 
-        return $this->render('subjects/form.html.twig',
+        return $this->render('subjects/subject_form.html.twig',
             ['form' => $form->createView(),
             'route' => 'subject_show',
             'department_name' => $currentDepartment,
@@ -94,7 +94,7 @@ class SubjectsController extends Controller
             return $this->redirectToRoute('subject_show_course', ['currentDepartment' => $currentDepartment, 'number' => $number]);
         }
 
-        return $this->render('subjects/form.html.twig',
+        return $this->render('subjects/subject_form.html.twig',
             ['form' => $form->createView(),
                 'route' => 'subject_show_course',
                 'department_name' => $currentDepartment,
@@ -105,7 +105,7 @@ class SubjectsController extends Controller
     /**
      * @Route("/{currentDepartment}/{id}/edit", name="subjects_edit", methods="GET|POST")
      */
-    public function edit($currentDepartment, $id, Request $request): Response
+    public function editSubject($currentDepartment, $id, Request $request): Response
     {
         $subject = $this->getDoctrine()->getRepository(Subjects::class)->find($id);
         $form = $this->createForm(SubjectsType::class, $subject);
@@ -117,7 +117,7 @@ class SubjectsController extends Controller
             return $this->redirectToRoute('subject_show', ['currentDepartment' => $currentDepartment]);
         }
 
-        return $this->render('subjects/form.html.twig',
+        return $this->render('subjects/subject_form.html.twig',
             ['form' => $form->createView(),
                 'route' => 'subject_show',
                 'department_name' => $currentDepartment,
@@ -127,10 +127,15 @@ class SubjectsController extends Controller
     /**
      * @Route("/{currentDepartment}/subject/{id}/delete", name="subjects_delete", methods="DELETE")
      */
-    public function delete($currentDepartment, $id, Request $request, Subjects $subject): Response
+    public function deleteSubject($currentDepartment, $id, Request $request): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$subject->getId(), $request->request->get('_token'))) {
+        $subject = $this->getDoctrine()->getRepository(Subjects::class)->find($id);
+        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
             $em = $this->getDoctrine()->getManager();
+            $schedule_array = $subject->getSchedules();
+            foreach ($schedule_array as $schedule){
+                $schedule->setSubjectName(null);
+            }
             $em->remove($subject);
             $em->flush();
         }

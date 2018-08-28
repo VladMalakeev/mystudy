@@ -34,7 +34,7 @@ class LecturersController extends Controller
     /**
      * @Route("/{currentDepartment}/new", name="lecturers_new", methods="GET|POST")
      */
-    public function new($currentDepartment, Request $request, FileUploader $fileUploader): Response
+    public function newLecturer($currentDepartment, Request $request, FileUploader $fileUploader): Response
     {
         $department = $this->getDoctrine()->getRepository(Department::class)->findOneBy(array("short_name" => $currentDepartment));
         $lecturer = new Lecturers();
@@ -56,7 +56,7 @@ class LecturersController extends Controller
             return $this->redirectToRoute('lecturers_show', array('currentDepartment' => $currentDepartment));
         }
 
-        return $this->render('lecturers/form.html.twig', [
+        return $this->render('lecturers/lecturer_form.html.twig', [
             'lecturer' => $lecturer,
             'photo' => null,
             'form' => $form->createView(),
@@ -67,15 +67,15 @@ class LecturersController extends Controller
     /**
      * @Route("/{currentDepartment}", name="lecturers_show", methods="GET")
      */
-    public function show($currentDepartment): Response
+    public function showLecturers($currentDepartment): Response
     {
-        return $this->render('lecturers/lecturers.html.twig', ['department_name' => $currentDepartment]);
+        return $this->render('lecturers/lecturer_list.html.twig', ['department_name' => $currentDepartment]);
     }
 
     /**
      * @Route("/{currentDepartment}/{id}/edit", name="lecturers_edit", methods="GET|POST")
      */
-    public function edit($currentDepartment, $id, Request $request, FileUploader $fileUploader): Response
+    public function editLecturer($currentDepartment, $id, Request $request, FileUploader $fileUploader): Response
     {
         $lecturer = $this->getDoctrine()->getRepository(Lecturers::class)->find($id);
         $photo = $lecturer->getPhoto();
@@ -86,15 +86,18 @@ class LecturersController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
 
             $file = $form['photo']->getData();
-            $fileName = $fileUploader->upload($file);
-            $lecturer->setPhoto($fileName);
+            if($file != '') {
+                $fileName = $fileUploader->upload($file);
+                $lecturer->setPhoto($fileName);
+            }
+            else  $lecturer->setPhoto($photo);
 
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('notice', 'Данные отредактированы!');
             return $this->redirectToRoute('lecturers_show', ['currentDepartment' => $currentDepartment]);
         }
 
-        return $this->render('lecturers/form.html.twig', [
+        return $this->render('lecturers/lecturer_form.html.twig', [
             'department_name' => $currentDepartment,
             'photo' => $photo,
             'form' => $form->createView()
@@ -104,10 +107,15 @@ class LecturersController extends Controller
     /**
      * @Route("/{currentDepartment}/lecturer/{id}/delete", name="lecturers_delete", methods="DELETE")
      */
-    public function delete($currentDepartment, $id, Request $request, Lecturers $lecturer): Response
+    public function deleteLecturer($currentDepartment, $id, Request $request): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$lecturer->getId(), $request->request->get('_token'))) {
+        $lecturer = $this->getDoctrine()->getRepository(Lecturers::class)->find($id);
+        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
             $em = $this->getDoctrine()->getManager();
+            $lecturer_array = $lecturer->getSchedules();
+            foreach ($lecturer_array as $schedule){
+                $schedule->setLecturer(null);
+            }
             $em->remove($lecturer);
             $em->flush();
         }

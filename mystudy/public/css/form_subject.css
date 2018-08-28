@@ -1,10 +1,3 @@
-#cover{
-    position: fixed;
-    background: rgba(0,0,0, 0.3);
-    width: 100%;
-    height: 100%;
-    text-align: center;
-}
 
 #newData{
     background: white;
@@ -20,29 +13,6 @@ form{
     width: 100%;
 }
 
-#buttons{
-    height: 10%;
-    width: 100%;
-    text-align: center;
-    display: inline-table;
-    margin-top: 20px;
-}
-.submit{
-    background: #BFE5F1;
-    padding: 3px 10px;
-    margin: 5px;
-    border: 2px groove grey;
-    text-decoration: none;
-    color: grey;
-    font-size: 16px;
-    font-family: Arial;
-}
-
-.submit:hover{
-    background: #5eb5e0;
-    border: 2px groove black;
-    color: black;
-}
 
 #subjects_name{
     width: 80%;
