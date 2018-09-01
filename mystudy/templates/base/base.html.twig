@@ -2,6 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
         <title>{% block title %}Admin Panel{% endblock %}</title>
         {% block stylesheets %}
             <link href="{{ asset('css/base.css') }}"  rel="stylesheet">
@@ -13,6 +14,8 @@
             {% block absolute %}
 
             {% endblock %}
+
+
             <div id="wraper">
                 {% block header %}
                     <div id="block_header">
@@ -20,7 +23,7 @@
                         {% if is_granted('ROLE_SUPER_ADMIN') %}
                         <a href="/institutes">Управление институтами</a>
                         {% endif %}
-                        <h1 id="institute_name">{{ data_base.getInstitute }}</h1>
+                        <h1 id="institute_name">{{ data_base.getInstitute(app.user.institute.getId) }}</h1>
                     </div>
                 {% endblock %}
 
@@ -50,6 +53,15 @@
 
                 </div>
                 {% endblock %}
+
+
+                    <div id="flash_block" >
+                            {% block massage %}
+
+                            {% endblock %}
+                        </span>
+                    </div>
+
 
                 {% block footer %}
                     <div id="block_footer">

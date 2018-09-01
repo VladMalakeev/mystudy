@@ -1,0 +1,36 @@
+{% extends 'base/base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('css/list/list_news.css') }}"  rel="stylesheet">
+{% endblock %}
+
+{% block title %}News{% endblock %}
+
+    {% block control_panel %}
+        <div id="block_news">
+            <div id="news_add">
+                 <a href="{{ path('news_new') }}">Добавить новость</a>
+            </div>
+            {% for news in data_base.getNews(app.user.institute.getId) %}
+            <div class="news_body">
+                <div class="news_buttons">
+                    <a class="news_btn" href="{{ path('news_edit',{'id':news.getId}) }}"><img src="{{ asset('img/edit.png') }}"></a>
+                    {{ include('news/news_delete_form.html.twig') }}
+                </div>
+                <h2>{{ news.getHeader }}</h2>
+
+               <div class="news_image">
+                       <img  src="{{ asset('uploads/images/'~news.getImage) }}" >
+               </div>
+
+                <div class="news_content">
+
+                    <div class="news_description">
+                        <p class="news_text">{{ news.getDescription }}</p>
+                    </div>
+
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% endblock %}

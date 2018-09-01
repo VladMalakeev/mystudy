@@ -1,11 +1,10 @@
-
 #newData{
     background: white;
     display: inline-flex;
     padding: 25px;
-    margin-top: 5%;
-    width: 40%;
-    height: 50%;
+    margin-top: 10%;
+    width: 20%;
+    height: 20%;
     box-shadow: 0px 0px 50px 1px #020202;
     border: 1px solid grey;
 }
@@ -14,13 +13,16 @@ form{
     display: inline;
 }
 
-
-#subjects_name{
-    width: 80%;
+h3{
+    padding: 0px;
+    margin: 15px;
 }
 
-#subjects_description{
-    width: 80%;
-    height: 100px;
-    resize: none;
+#info{
+    font-weight: bold;
+    font-size: 18px;
+}
+
+#info input{
+    text-align: center;
 }

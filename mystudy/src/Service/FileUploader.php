@@ -12,24 +12,43 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FileUploader
 {
-    private $targetDir;
+    private $photosDir;
+    private $imagesDir;
 
-    public function __construct($targetDir)
+    public function __construct($photosDir, $imagesDir)
     {
-        $this->targetDir = $targetDir;
+        $this->photosDir = $photosDir;
+        $this->imagesDir = $imagesDir;
     }
 
-    public function upload(UploadedFile $file)
+    public function uploadPhotos(UploadedFile $file)
     {
         $fileName = md5(uniqid()).'.'.$file->guessExtension();
 
-        $file->move($this->getTargetDir(), $fileName);
+        $file->move($this->getPhotosDir(), $fileName);
 
         return $fileName;
     }
 
-    public function getTargetDir()
+    public function uploadImages(UploadedFile $file)
     {
-        return $this->targetDir;
+        $fileName = md5(uniqid()).'.'.$file->guessExtension();
+
+        $file->move($this->getImagesDir(), $fileName);
+
+        return $fileName;
+    }
+
+    public function getPhotosDir()
+    {
+        return $this->photostDir;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getImagesDir()
+    {
+        return $this->imagesDir;
     }
 }

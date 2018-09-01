@@ -41,12 +41,17 @@ class Users implements  UserInterface, \Serializable
     /**
      * @ORM\Column(type="string", length=255)
      */
-
     private $roles;
     /**
      * @ORM\Column(type="boolean")
      */
     private $status;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Institute", inversedBy="users")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $institute;
 
     public function __construct()
     {
@@ -125,8 +130,19 @@ class Users implements  UserInterface, \Serializable
 
     public function getRoles()
     {
-        //return $this->roles;
         return array($this->roles);
+    }
+
+    public function getInstitute(): ?Institute
+    {
+        return $this->institute;
+    }
+
+    public function setInstitute(Institute $institute): self
+    {
+        $this->institute = $institute;
+
+        return $this;
     }
 
     public function getSalt()

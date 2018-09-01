@@ -10,7 +10,7 @@
     <div id="block_workspace">
         <div id="departments">
             <ul>
-                {% for department in data_base.getDepartments %}
+                {% for department in data_base.getDepartments(app.user.institute.getId) %}
                     <li>
                         <a href="{{ path('subject_show', {'currentDepartment':department.getShortName}) }}">{{ department.getShortName }}</a>
                         <ul id="courses">
@@ -36,11 +36,25 @@
                </li>
             {% for subject in data_base.getSubjects(department_name, current_course) %}
                 <li>
-                    {{ subject.getName }}{{ include('subjects/_delete_form.html.twig') }}
+                    {{ subject.getName }}{{ include('subjects/subject_delete_form.html.twig') }}
                     <a href="{{ path('subjects_edit', {'currentDepartment': department_name, 'id' : subject.getId}) }}">Редактировать</a>
                 </li>
            {% endfor %}
            </ul>
        </div>
     </div>
+{% endblock %}
+
+{% block massage %}
+    {% for message in app.flashes('new') %}
+        <span id="flash_massage" style="background: green">{{ message }}</span>
+    {% endfor %}
+
+    {% for message in app.flashes('edit') %}
+        <span id="flash_massage"  style="background: blue">{{ message }}</span>
+    {% endfor %}
+
+    {% for message in app.flashes('delete') %}
+        <span id="flash_massage"  style="background: red" >{{ message }}</span>
+    {% endfor %}
 {% endblock %}

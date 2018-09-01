@@ -1,0 +1,65 @@
+#departments li{
+    display: inline-block;
+    margin:10px;
+}
+#courses{
+    padding: 0px;
+    text-align: center;
+    display:flex;
+}
+.courses_li{
+    vertical-align: top;
+    margin: auto;
+    list-style: none;
+    margin-top: 0px;
+    width: 20%;
+}
+
+.groups{
+    padding: 0px;
+
+}
+.groups li{
+    display:block ;
+
+}
+
+#group_list{
+    border:1px solid;
+    width: 100%;
+    height: 80%;
+}
+
+.group_item{
+    background: yellow;
+    margin: 5px;
+}
+.group_options{
+    display: none;
+    background: white;
+    padding: 10px;
+}
+
+.group_name {
+     cursor: pointer;
+
+ }
+
+.group_name span {
+    padding: 5px;
+
+}
+
+.group_name:hover{
+    color: red;
+}
+
+
+.group_delete{
+    display: none;
+}
+
+.group_edit{
+    display: none;
+}
+

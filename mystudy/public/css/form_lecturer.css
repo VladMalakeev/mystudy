@@ -11,6 +11,7 @@
 }
 form{
     width: 100%;
+    display: inline;
 }
 #main_info{
     height: 90%;
@@ -84,4 +85,5 @@ h3{
 #lecturers_patronymic{
     width: 60%;
 }
+
 

@@ -44,20 +44,20 @@ class LecturersController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $file = $form['photo']->getData();
-            $fileName = $fileUploader->upload($file);
-
-            $lecturer->setPhoto($fileName);
+            if($file != '') {
+                $fileName = $fileUploader->uploadPhotos($file);
+                $lecturer->setPhoto($fileName);
+            }
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($lecturer);
             $em->flush();
 
-            $this->addFlash('notice', 'Преподаватель добавлен!');
+            $this->addFlash('new', 'Преподаватель добавлен!');
             return $this->redirectToRoute('lecturers_show', array('currentDepartment' => $currentDepartment));
         }
 
         return $this->render('lecturers/lecturer_form.html.twig', [
-            'lecturer' => $lecturer,
             'photo' => null,
             'form' => $form->createView(),
             'department_name' => $currentDepartment
@@ -87,13 +87,13 @@ class LecturersController extends Controller
 
             $file = $form['photo']->getData();
             if($file != '') {
-                $fileName = $fileUploader->upload($file);
+                $fileName = $fileUploader->uploadPhotos($file);
                 $lecturer->setPhoto($fileName);
             }
             else  $lecturer->setPhoto($photo);
 
             $this->getDoctrine()->getManager()->flush();
-            $this->addFlash('notice', 'Данные отредактированы!');
+            $this->addFlash('edit', 'Данные отредактированы!');
             return $this->redirectToRoute('lecturers_show', ['currentDepartment' => $currentDepartment]);
         }
 
@@ -119,7 +119,7 @@ class LecturersController extends Controller
             $em->remove($lecturer);
             $em->flush();
         }
-
+        $this->addFlash('delete', 'Преподаватель удален!');
         return $this->redirectToRoute('lecturers_show', array('currentDepartment' => $currentDepartment));
     }
 }

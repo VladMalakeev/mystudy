@@ -1,0 +1,88 @@
+#newData{
+    background: white;
+    display: inline-flex;
+    padding: 15px;
+    margin-top: 3%;
+    width: 80%;
+    height: 80%;
+    box-shadow: 0px 0px 50px 1px #020202;
+    border: 1px solid grey;
+
+}
+form{
+    width: 100%;
+}
+
+h3, h2{
+    margin: 0px;
+}
+
+#week_header{
+    display: inline-flex;
+    width: 100%;
+    border-bottom: 1px solid black;
+}
+
+#week1{
+    width: 50%;
+}
+
+#week2{
+    width: 50%;
+}
+
+
+#week_coll li{
+    width: 50%;
+    list-style: none;
+    padding: 10px;
+}
+
+#week_coll{
+    display: flex;
+    padding: 0px;
+    overflow: scroll;
+    height: 82%;
+    margin:5px;
+}
+
+select{
+    width: 100%;
+}
+
+tr{
+    width: 100%;
+}
+.counter{
+    width: 5%;
+}
+
+.subject{
+    width:55%;
+}
+
+.lecturer{
+    width:30%;
+}
+
+.classroom{
+    width: 10%;
+}
+
+.classroom input{
+    width: 100%;
+    text-align: center;
+}
+
+#days{
+    float: left;
+    margin-top: 70px;
+}
+
+#form_buttons {
+    height: 10%;
+    width: 100%;
+    text-align: center;
+    display: inline-table;
+    margin-top:5px;
+}

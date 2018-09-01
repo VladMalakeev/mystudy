@@ -11,6 +11,7 @@
 }
 form{
     width: 100%;
+    display: inline;
 }
 
 #main_info{
@@ -41,3 +42,4 @@ h2{
     height: 100%;
     resize: none;
 }
+

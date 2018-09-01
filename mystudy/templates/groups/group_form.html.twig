@@ -1,0 +1,23 @@
+{% extends 'groups/group_list.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link href="{{ asset('css/form_group.css') }}"  rel="stylesheet">
+{% endblock %}
+
+{% block absolute %}
+<div id="form_cover">
+    <div id="newData">
+        <form action="" method="post">
+            <h3>Введите номер группы</h3>
+            <div id="info">
+               {{ department_name }}{{ year }}<input type="text" name="group_number" value="{{ number }}" size="1" maxlength="1">
+            </div>
+        <div id="form_buttons">
+            <input class="form_submit" type="submit" value="Добавить" name="add_group"/>
+            <a class="form_submit" href="{{ path('groups_show', {'short_name' : department_name}) }}">Отмена</a>
+        </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

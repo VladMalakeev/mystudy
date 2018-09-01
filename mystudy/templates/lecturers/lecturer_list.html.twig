@@ -1,0 +1,53 @@
+{% extends 'management/management.html.twig' %}
+ {% block stylesheets %}
+     {{ parent() }}
+     <link href="{{ asset('css/list.css') }}"  rel="stylesheet">
+ {% endblock %}
+
+{% block title %}Список преподавателей{% endblock %}
+
+
+{% block workspase %}
+    <div id="block_workspace">
+        <div id="departments">
+            <ul>
+                {% for department in data_base.getDepartments(app.user.institute.getId) %}
+                    <li>
+                        <a href="{{ path('lecturers_show', {'currentDepartment':department.getShortName}) }}">{{ department.getShortName }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div id="subjects_list">
+            <ul>
+                <li>
+                    <a href="{{ path('lecturers_new', {'currentDepartment' : department_name}) }}">Добавить преподавателя</a>
+                </li>
+                {% for lecturer in data_base.getLecturers(department_name) %}
+                    <li>
+                        {{ lecturer.getLastName }} {{ lecturer.getFirstName }} {{ lecturer.getPatronymic }}{{ include('lecturers/lecturer_delete_form.html.twig') }}
+                        <a href="{{ path('lecturers_edit', {'currentDepartment' : department_name,'id': lecturer.id}) }}">Редактировать</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block massage %}
+    {% for message in app.flashes('new') %}
+            <span id="flash_massage" style="background: green">{{ message }}</span>
+    {% endfor %}
+
+    {% for message in app.flashes('edit') %}
+        <span id="flash_massage"  style="background: blue">{{ message }}</span>
+    {% endfor %}
+
+    {% for message in app.flashes('delete') %}
+        <span id="flash_massage"  style="background: red" >{{ message }}</span>
+    {% endfor %}
+{% endblock %}
+

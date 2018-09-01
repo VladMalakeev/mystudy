@@ -63,6 +63,7 @@ class SubjectsController extends Controller
             $em->persist($subject);
             $em->flush();
 
+            $this->addFlash('new', 'Новая дисциплина добавлена!');
             return $this->redirectToRoute('subject_show', ['currentDepartment' => $currentDepartment]);
         }
 
@@ -91,6 +92,7 @@ class SubjectsController extends Controller
             $em->persist($subject);
             $em->flush();
 
+            $this->addFlash('new', 'Новая дисциплина добавлена!');
             return $this->redirectToRoute('subject_show_course', ['currentDepartment' => $currentDepartment, 'number' => $number]);
         }
 
@@ -114,6 +116,7 @@ class SubjectsController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
+            $this->addFlash('edit', 'Данные отредактированы!');
             return $this->redirectToRoute('subject_show', ['currentDepartment' => $currentDepartment]);
         }
 
@@ -140,6 +143,7 @@ class SubjectsController extends Controller
             $em->flush();
         }
 
+        $this->addFlash('delete', 'Дисциплина удалена!');
         return $this->redirectToRoute('subject_show',array('currentDepartment' => $currentDepartment));
     }
 }

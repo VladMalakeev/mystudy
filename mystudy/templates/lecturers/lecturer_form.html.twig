@@ -1,0 +1,60 @@
+{% extends 'lecturers/lecturer_list.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('css/form_lecturer.css') }}"  rel="stylesheet">
+{% endblock %}
+
+{% block absolute %}
+<div id="form_cover">
+    <div id="newData">
+        {{ form_start(form) }}
+
+        <div id="addition_info">
+            <div id="photo">
+               <h3>{{ form_label(form.photo) }}</h3>
+                <div id="image">
+                    {% if photo != null %}
+                    <img src="{{ asset('uploads/photos/'~photo) }}"  width='100%' height='100%'/>
+                    {% endif %}
+                </div>
+                {{ form_widget(form.photo) }}
+            </div>
+        </div>
+
+        <div id="main_info">
+
+            <div id="info_fields">
+
+                <div class="field">
+                    <div class="label"> {{ form_label(form.last_name) }}</div>
+                    {{ form_widget(form.last_name) }}
+                </div>
+
+                <div class="field">
+                    <div class="label">{{ form_label(form.first_name) }}</div>
+                    {{ form_widget(form.first_name) }}
+                </div>
+
+                <div class="field">
+                    <div class="label"> {{ form_label(form.patronymic) }}</div>
+                    {{ form_widget(form.patronymic) }}
+                </div>
+            </div>
+
+            <div id="description">
+                <h3>{{ form_label(form.description) }}</h3>
+                {{ form_widget(form.description, { 'attr': {'class': 'description_field'} }) }}
+            </div>
+
+        </div>
+
+
+        <div id="form_buttons">
+            <button class="form_submit">{{ button_label|default('Сохранить') }}</button>
+            <a class="form_submit" href="{{ path('lecturers_show', {'currentDepartment' : department_name}) }}">Отмена</a>
+        </div>
+        {{ form_end(form) }}
+    </div>
+</div>
+{% endblock %}

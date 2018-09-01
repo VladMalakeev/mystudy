@@ -1,0 +1,26 @@
+{% extends 'base/base.html.twig' %}
+
+{% block title %}Управление{% endblock %}
+
+
+    {% block control_panel %}
+        <div id="block_control_panel">
+
+            <div id="block_site_bar">
+                <ul>
+                    <li><a href="{{ path('group_index') }}">Структура и расписание</a></li>
+                    <li><a href="{{ path('subject_index') }}">Предметы</a></li>
+                    <li><a href="{{ path('lecturers_index') }}">Преподаватели</a></li>
+                    <li><a href="{{ path('department_index') }}">Кафедры</a></li>
+                </ul>
+            </div>
+
+            {% block workspase %}
+            <div id="block_workspace">
+                <p>workspace</p>
+            </div>
+            {% endblock %}
+
+        </div>
+    {% endblock %}
+

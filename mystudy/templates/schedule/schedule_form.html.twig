@@ -1,0 +1,95 @@
+{% extends 'groups/group_list.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('css/form_schedule.css') }}"  rel="stylesheet">
+{% endblock %}
+
+{% block absolute %}
+<div id="form_cover">
+    <div id="newData">
+        <form action="" method="post">
+            <h2>Расписание группы {{ group.getFullName }}</h2>
+            <div id="week_header">
+                <h3 id="week1">Четная неделя</h3>
+                <h3 id="week2">Нечетная неделя</h3>
+            </div>
+
+            <ul id="week_coll">
+                {% for k in 1..2 %}
+                    <li>
+                        {% set days = ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ'] %}
+                        {% for day in days %}
+                            <div id="days">{{ day }}</div>
+                            <table>
+                                        <tr>
+                                            <th>№</th>
+                                            <th>Дисциплина</th>
+                                            <th>Преподаватель</th>
+                                            <th>Аудитория</th>
+                                        </tr>
+                                            {% for i in 1..5 %}
+                                                <tr>
+                                                    <td class="counter">{{ i }}</td>
+                                                    <td class="subject">
+                                                        <select name="schedule[{{ k }}][{{ day }}][{{ i }}]['subject']" >
+                                                            <option value="null">---------- нет ---------</option>
+                                                            {% for subject in data_base.getSubjects(group.getDepartment.getShortName, group.getCourse) %}
+                                                                <option
+                                                                        {% set break = true %}
+                                                                        {% for schedule in schedule_array if break %}
+                                                                            {% if schedule.getWeek == k and schedule.getDayOfWeek == day and schedule.getLessonNumber == i and  schedule.getSubjectName != null %}
+                                                                                {% if schedule.getSubjectName.getName == subject.getName %}
+                                                                                    selected = "selected"
+                                                                                    {% set break = false %}
+                                                                                {% endif %}
+                                                                            {% endif %}
+                                                                        {% endfor %}
+                                                                        value="{{ subject.getId }}" >{{ subject.getName }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </td>
+                                                    <td class="lecturer">
+                                                        <select name="schedule[{{ k }}][{{ day }}][{{ i }}]['lecturer']">
+                                                            <option value="null">---------- нет ---------</option>
+                                                            {% for lecturer in data_base.getLecturers(group.getDepartment.getShortName) %}
+                                                                <option
+                                                                        {% set break = true %}
+                                                                        {% for schedule in schedule_array if break %}
+                                                                            {% if schedule.getWeek == k and schedule.getDayOfWeek == day and schedule.getLessonNumber == i and  schedule.getLecturer != null %}
+                                                                                {% if schedule.getLecturer.getNameInfo ==  lecturer.getNameInfo %}
+                                                                                    selected = "selected"
+                                                                                    {% set break = false %}
+                                                                                {% endif %}
+                                                                            {% endif %}
+                                                                        {% endfor %}
+                                                                        value="{{ lecturer.getId }}">{{ lecturer.getNameInfo }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </td>
+                                                    <td class="classroom">
+                                                        <input type="text" name="schedule[{{ k }}][{{ day }}][{{ i }}]['classroom']" size="10"
+                                                                {% set break = true %}
+                                                                {% for schedule in schedule_array if break %}
+                                                            {% if schedule.getWeek == k and schedule.getDayOfWeek == day and schedule.getLessonNumber == i and  schedule.getClassroom != null %}
+                                                                value="{{  schedule.getClassroom }}"
+                                                                {% set break = false %}
+                                                            {% endif %}
+                                                                {% endfor %}>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+
+                            </table>
+                        {% endfor %}
+                    </li>
+                {% endfor %}
+            </ul>
+            <div id="form_buttons">
+                <input class="form_submit" type="submit" value="Cохранить" name="submit_schedule">
+                <a class="form_submit" href="{{ path('groups_show', {'short_name' : group.getDepartment.getShortName }) }}">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -38,7 +38,7 @@ class LoginController extends AbstractController
      * @Route("/", name="home")
      */
     public function homepage(){
-        return $this->render('admin/main.html.twig');
+        return $this->redirectToRoute('news_index');
     }
 
 }

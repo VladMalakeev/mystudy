@@ -6,6 +6,7 @@
 parameters:
     locale: 'en'
     photos_directory: '%kernel.project_dir%/public/uploads/photos'
+    images_directory: '%kernel.project_dir%/public/uploads/images'
 
 services:
     # default configuration for services in *this* file
@@ -33,6 +34,7 @@ services:
 
     App\Service\FileUploader:
             arguments:
-                $targetDir: '%photos_directory%'
+                $photosDir: '%photos_directory%'
+                $imagesDir: '%images_directory%'
 
 

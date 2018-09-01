@@ -1,0 +1,36 @@
+{% extends 'management/management.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('css/list.css') }}"  rel="stylesheet">
+{% endblock %}
+     {% block workspase %}
+         <div id="block_workspace">
+             <ul id="departments_list">
+                 <li>
+                     <a href="{{ path('department_new') }}">Добавить кафедру</a>
+                 </li>
+                 {% for department in data_base.getDepartments(app.user.institute.getId) %}
+
+                     <li>
+                         {{ department.getFullName }} ({{ department.getShortName  }})
+                         {{ include('department/department_delete_form.html.twig') }}
+                         <a href="{{ path('department_edit', {'id' : department.getId}) }}">Редактировать</a>
+                     </li>
+                 {% endfor %}
+             </ul>
+         </div>
+     {% endblock %}
+
+{% block massage %}
+    {% for message in app.flashes('new') %}
+        <span id="flash_massage" style="background: green">{{ message }}</span>
+    {% endfor %}
+
+    {% for message in app.flashes('edit') %}
+        <span id="flash_massage"  style="background: blue">{{ message }}</span>
+    {% endfor %}
+
+    {% for message in app.flashes('delete') %}
+        <span id="flash_massage"  style="background: red" >{{ message }}</span>
+    {% endfor %}
+{% endblock %}

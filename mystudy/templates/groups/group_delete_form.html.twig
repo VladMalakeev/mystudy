@@ -1,0 +1,5 @@
+<form method="post" class="group_delete" action="{{ path('group_delete', {'currentDepartment' : group.department.shortName, 'groupId' : group.id})  }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ group.id) }}">
+    <button class="btn_delete"><img src="{{ asset('img/delete.png') }}" width="15px" hight="15px"></button>
+</form>

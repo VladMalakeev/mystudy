@@ -12,6 +12,14 @@ class ManagementController extends AbstractController
      */
     public function index()
     {
-        return $this->render('management/management.html.twig');
+        return $this->redirectToRoute('group_index');
+    }
+
+    /**
+     * @Route("/management/structure", name="structure")
+     */
+    public function structure()
+    {
+        return $this->redirectToRoute('group_index');
     }
 }

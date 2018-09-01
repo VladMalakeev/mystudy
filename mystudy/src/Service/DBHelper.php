@@ -4,21 +4,20 @@ namespace App\Service;
 use App\Entity\Courses;
 use App\Entity\Department;
 use App\Entity\Institute;
-use App\Repository\DepartmentRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
 class DBHelper extends AbstractController
 {
 
-    public function getInstitute(){
-        $id = 1; //толькло 1 институт в бд
+    public function getInstitute($id){
         $institute = $this->getDoctrine()->getRepository(Institute::class)->find($id);
         return $institute->getFullName();
     }
 
-    public  function getDepartments(){
-        return  $departments = $this->getDoctrine()->getRepository(Department::class)->findAll();
+    public  function getDepartments($id){
+        $institute = $this->getDoctrine()->getRepository(Institute::class)->find($id);
+        return  $departments = $institute->getDepartments();
     }
 
     public function getGroups(string $short_name){
@@ -84,4 +83,10 @@ class DBHelper extends AbstractController
     public function getCourses(){
         return $this->getDoctrine()->getRepository(Courses::class)->findAll();
     }
+
+    public function getNews($id){
+        $institute = $this->getDoctrine()->getRepository(Institute::class)->find($id);
+        return $institute->getNews();
+    }
+
 }
