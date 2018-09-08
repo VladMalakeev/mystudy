@@ -10,6 +10,13 @@ use Symfony\Component\HttpFoundation\Response;
 class DBHelper extends AbstractController
 {
 
+    public $manager;
+
+    public function __construct(RepositoryManager $manager)
+    {
+        $this->manager = $manager;
+    }
+
     public function getInstitute($id){
         $institute = $this->getDoctrine()->getRepository(Institute::class)->find($id);
         return $institute->getFullName();
@@ -87,6 +94,10 @@ class DBHelper extends AbstractController
     public function getNews($id){
         $institute = $this->getDoctrine()->getRepository(Institute::class)->find($id);
         return $institute->getNews();
+    }
+
+    public function getUsers($id,$role){
+        return $this->manager->getUsersRepository()->findBy(array('institute' => $id, 'roles' => $role));
     }
 
 }

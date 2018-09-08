@@ -41,7 +41,7 @@ class FileUploader
 
     public function getPhotosDir()
     {
-        return $this->photostDir;
+        return $this->photosDir;
     }
 
     /**

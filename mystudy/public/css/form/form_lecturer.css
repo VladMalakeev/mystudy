@@ -67,7 +67,7 @@ h3{
     height: 80%;
     margin: 10px auto;
     border: 1px groove black;
-    background: url("../img/lecturer.jpg");
+    background: url("../../img/lecturer.jpg");
     background-size: contain;
     background-repeat:no-repeat;
     background-position: center;

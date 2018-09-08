@@ -1,5 +1,36 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-    <input type="hidden" name="institute" value="{{ app.user.institute.getId }}">
-{{ form_end(form) }}
+{% extends 'users/user_list.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('css/form/form_users.css') }}"  rel="stylesheet">
+{% endblock %}
+
+{% block absolute %}
+<div id="form_cover">
+    <div id="newData">
+
+        {{ form_start(form) }}
+        <div id="block_username">
+           <h3>{{ form_label(form.username) }}</h3>
+            {{ form_widget(form.username) }}
+        </div>
+
+        <div id="block_f_name">
+            <h3>{{ form_label(form.f_name) }}</h3>
+            {{ form_widget(form.f_name) }}
+        </div>
+
+        <div id="block_s_name">
+            <h3>{{ form_label(form.s_name) }}</h3>
+            {{ form_widget(form.s_name) }}
+        </div>
+
+        <div id="form_buttons">
+            <button class="form_submit">{{ button_label|default('Добавить') }}</button>
+            <a class="form_submit" href="{{ path('users_index') }}">Отмена</a>
+        </div>
+            <input type="hidden" name="institute" value="{{ app.user.institute.getId }}">
+        {{ form_end(form) }}
+    </div>
+</div>
+{% endblock %}

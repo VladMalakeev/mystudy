@@ -10,8 +10,16 @@
 <body>
 <form id="form" action="" method="post">
 
+        {% for message in app.flashes('success') %}
+            <div class="success">{{ message }}</div>
+        {% endfor %}
+
+        {% for message in app.flashes('error') %}
+          <div class="error">{{ message }}</div>
+        {% endfor %}
+
     {% if error %}
-      <div id="error">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+      <div class="error">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
   <label>Username</label>
   <input type="text" name="_username" value="{{ lastUserName }}" ><br>

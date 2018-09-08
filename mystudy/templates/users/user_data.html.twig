@@ -1,0 +1,20 @@
+{% extends 'users/user_list.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+  <link href="{{ asset('css/form/form_user_data.css') }}"  rel="stylesheet">
+{% endblock %}
+
+{% block absolute %}
+<div id="form_cover">
+  <div id="newData">
+    <div id="wrap">
+      <h3>Пользователю было отправлено письмо!</h3>
+      <h4>{{ user.getFName }} {{ user.getSName }}</h4>
+      <h4>Пароль: {{ user.getPassword }}</h4>
+      <h4>E-mail:  {{ user.getUsername }}</h4>
+      <a class="form_submit" href="{{ path('users_index') }}">OK</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

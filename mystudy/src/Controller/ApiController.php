@@ -77,7 +77,7 @@ class ApiController extends Controller
     public function getGroup($departmentName, $course){
         if($department = $this->manager->getDepartmentRepository()->findOneBy(array('short_name' => $departmentName)))
         {
-            if($this->$this->manager->getCoursesRepository()->findOneBy(array('number' => $course))){
+            if($this->manager->getCoursesRepository()->findOneBy(array('number' => $course))){
                 $groupArray = array();
                 foreach ($department->getGroups() as $group){
                     if($group->getCourse() == $course){

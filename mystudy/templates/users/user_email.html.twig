@@ -1,0 +1,5 @@
+<h1>Подтверждения аккаунта на {{  app.request.getHost() }}</h1>
+<h2>Здравствуйте {{ user.getFName }} {{ user.getSName }}</h2>
+<h3>login: <span style="background: yellow">{{ user.getUsername }}</span></h3>
+<h3>password: <span style="background: yellow">{{ user.getPassword }}</span></h3>
+<h4>Для верификации аккаунта перейдите по <a href="{{ app.request.getHost() }}/activate/{{ user.getHash }}">ссылке</a></h4>

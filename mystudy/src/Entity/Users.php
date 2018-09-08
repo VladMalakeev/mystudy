@@ -4,12 +4,13 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UsersRepository")
  */
-class Users implements  UserInterface, \Serializable
+class Users implements  AdvancedUserInterface, \Serializable
 {
     /**
      * @ORM\Id()
@@ -52,6 +53,11 @@ class Users implements  UserInterface, \Serializable
      * @ORM\JoinColumn(nullable=true)
      */
     private $institute;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $hash;
 
     public function __construct()
     {
@@ -174,6 +180,43 @@ class Users implements  UserInterface, \Serializable
             $this->password,
             $this->status,
             ) = unserialize($serialized);
+    }
+
+
+    public function isAccountNonExpired()
+    {
+        return true;
+    }
+
+    public function isAccountNonLocked()
+    {
+        return true;
+    }
+
+    public function isCredentialsNonExpired()
+    {
+        return true;
+    }
+
+    public function isEnabled()
+    {
+        return $this->status;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getHash()
+    {
+        return $this->hash;
+    }
+
+    /**
+     * @param mixed $hash
+     */
+    public function setHash($hash): void
+    {
+        $this->hash = $hash;
     }
 
     /**

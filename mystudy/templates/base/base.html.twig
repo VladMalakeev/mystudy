@@ -31,16 +31,16 @@
                     <div id="block_nav_bar">
                         <ul>
                             <li>
-                                <a href="/management">Управление</a>
+                                <a href="{{ path('group_index') }}">Управление</a>
                             </li>
 
                             <li>
-                                <a href="/news">Новости</a>
+                                <a href="{{ path('news_index') }}">Новости</a>
                             </li>
 
                             {% if is_granted('ROLE_ADMIN') %}
                                 <li>
-                                    <a href="/staff">Персонал</a>
+                                    <a href="{{ path('users_index') }}">Персонал</a>
                                 </li>
                             {% endif %}
 

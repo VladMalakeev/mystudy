@@ -1,2 +1,64 @@
-<a href="{{ path('users_new', {'role':'ROLE_MODERATOR'}) }}">moderator</a>
-<a href="{{ path('users_new', {'role':'ROLE_ADMIN'}) }}">administrator</a>
+{% extends 'base/base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('css/list/list_users.css') }}"  rel="stylesheet">
+{% endblock %}
+
+{% block title %}Управление пользователями{% endblock %}
+    {% block control_panel %}
+        <div id="main_block">
+            <div id="admin_block">
+                <div id="admin_column">
+                    <div class="header">
+                        <h3>Администратор</h3>
+                    </div>
+
+                    <div class="new_user">
+                        <a href="{{ path('users_new', {'role':'admin'}) }}">Новый администратор</a>
+                    </div>
+
+                    {% for user in data_base.getUsers(app.user.institute.getId, 'ROLE_ADMIN') %}
+                        <div class="user_info">
+                            {{ user.getFName }} {{ user.getSName }}
+                            <a class="user_buttons" href="{{ path('users_edit', {'id':user.getId}) }}"><img src="{{ asset('img/edit.png') }}"></a>
+                            {{ include('users/user_delete_form.html.twig') }}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div id="moderator_block">
+                <div id="moderator_column">
+                    <div class="header">
+                        <h3>Модератор</h3>
+                    </div>
+
+                    <div class="new_user">
+                        <a href="{{ path('users_new', {'role':'moderator'}) }}">Новый модератор</a>
+                    </div>
+
+                    {% for user in data_base.getUsers(app.user.institute.getId, 'ROLE_MODERATOR') %}
+                        <div class="user_info">
+                            {{ user.getFName }} {{ user.getSName }}
+                            <a class="user_buttons" href="{{ path('users_edit', {'id':user.getId}) }}"><img src="{{ asset('img/edit.png') }}"></a>
+                            {{ include('users/user_delete_form.html.twig') }}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+
+{% block massage %}
+    {% for message in app.flashes('new') %}
+        <span id="flash_massage" style="background: green">{{ message }}</span>
+    {% endfor %}
+
+    {% for message in app.flashes('edit') %}
+        <span id="flash_massage"  style="background: blue">{{ message }}</span>
+    {% endfor %}
+
+    {% for message in app.flashes('delete') %}
+        <span id="flash_massage"  style="background: red" >{{ message }}</span>
+    {% endfor %}
+{% endblock %}

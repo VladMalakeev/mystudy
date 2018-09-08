@@ -48,7 +48,7 @@ class GroupsController extends Controller
     {
         $department = $this->getDoctrine()->getRepository(Department::class)->findOneBy(array("short_name" => $currentDepartment));
         $year = date("y")- ($course-1);
-        $number=1;
+        $number=0;
         $groups = $department->getGroups();
 
         if(count($groups)>0) {

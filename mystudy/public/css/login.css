@@ -37,10 +37,18 @@ label{
     color: red;
 }
 
-#error{
+.error{
     padding: 5px;
     margin: 5px;
     color: red;
+    font-weight: bold;
+    text-align: center;
+    background: white;
+}
+.success{
+    padding: 5px;
+    margin: 5px;
+    color: green;
     font-weight: bold;
     text-align: center;
     background: white;
